@@ -13,6 +13,20 @@ app.get('/', (request, response) => {
   return response.status(234).send('Welcome to MERN stack!');
 });
 
+// Route for Get All Books from database
+app.get('/books', async (request, response) => {
+  try {
+    const books = await Book.find({});
+    return response.status(200).json({
+      count: books.length,
+      data: books,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return response.status(500).send({ message: error.message });
+  }
+});
+
 // Route for Save a new Book
 app.post('/books', async (request, response) => {
   try {
