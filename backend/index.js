@@ -27,6 +27,18 @@ app.get('/books', async (request, response) => {
   }
 });
 
+// Route get a book from the database by ID
+app.get('/books/:id', async (request, response) => {
+  const { id } = request.params;
+  try {
+    const book = await Book.findById(id);
+    return response.status(200).json(book);
+  } catch (error) {
+    console.log(error.message);
+    return response.status(500).send({ message: error.message });
+  }
+});
+
 // Route for Save a new Book
 app.post('/books', async (request, response) => {
   try {
